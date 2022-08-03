@@ -32,6 +32,7 @@ private:
 	static mutex m_mutex;
 };
 
+mutex CSingle_lazy::m_mutex;
 atomic<CSingle_lazy*> CSingle_lazy::m_ps{ nullptr };
 //=================================================================//
 
@@ -74,11 +75,16 @@ CSingle_hungry* CSingle_hungry::m_ps = new CSingle_hungry();
 //=================================================================//
 
 int main() {
-	cout << "main function started...\n";
-	CSingle_lazy* csl = CSingle_lazy::getInstance();
-	CSingle_lazy_static& csls = CSingle_lazy_static::getInstance();
-	CSingle_hungry* csh = CSingle_hungry::getInstance();
-	cout << "main function returned...\n";
+	cout << "\nmain function started...\n\n";
+	cout << "first loop of getInstance.\n\n";
+	CSingle_lazy* csl1 = CSingle_lazy::getInstance();
+	CSingle_lazy_static& csls1 = CSingle_lazy_static::getInstance();
+	CSingle_hungry* csh1 = CSingle_hungry::getInstance();
+	cout << "\nsecond loop of getInstance.\nnothing is created here if succeed.\n\n";
+	CSingle_lazy* csl2 = CSingle_lazy::getInstance();
+	CSingle_lazy_static& csls2 = CSingle_lazy_static::getInstance();
+	CSingle_hungry* csh2 = CSingle_hungry::getInstance();
+	cout << "\nmain function returned...\n";
 
 	return 0;
 }
